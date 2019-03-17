@@ -30,6 +30,11 @@ function bs_get_post_type()
 				"name" => "Horas",
 				"value" => "hours",
 				"input" => "number"
+			),
+			"level" => array(
+				"name" => "Nivel",
+				"value" => "level",
+				"input" => "text"
 			)
 		)
 	);
@@ -157,6 +162,7 @@ function bs_course_price_callback()
 {
 	bs_course_callback('price');
 }
+/** END GENERIC ADD */
 
 function bs_course_hours_register()
 {
@@ -166,4 +172,14 @@ function bs_course_hours_register()
 function bs_course_hours_callback()
 {
 	bs_course_callback('hours');
+}
+
+function bs_course_level_register()
+{
+	bs_course_register('level');
+}
+
+function bs_course_level_callback()
+{
+	bs_course_callback('level');
 }
