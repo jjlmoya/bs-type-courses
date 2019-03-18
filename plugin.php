@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 
 /** MODEL CONFIGURATION **/
 require_once plugin_dir_path(__FILE__) . '/Courses.php';
-function bs_get_post_type()
+function bs_course_get_post_type()
 {
 	return Courses::getInstance('Curso', 'Cursos', "cursos",
 		array(
@@ -45,7 +45,7 @@ function bs_get_post_type()
 /** REGISTER CORE FUNCTIONS **/
 function bs_course_register_post_type()
 {
-	$model = bs_get_post_type();
+	$model = bs_course_get_post_type();
 	$labels = array(
 		"name" => __($model->plural, "custom-post-type-ui"),
 		"singular_name" => __($model->singular, "custom-post-type-ui"),
@@ -84,7 +84,7 @@ function bs_course_register_post_type()
 
 function bs_course_create_custom_params()
 {
-	$model = bs_get_post_type();
+	$model = bs_course_get_post_type();
 	foreach ($model->customFields as $customField) {
 		add_action('add_meta_boxes', $model->nameSpace . '_' . $customField["value"] . '_register');
 	}
@@ -92,7 +92,7 @@ function bs_course_create_custom_params()
 
 function bs_course_register($customType)
 {
-	$model = bs_get_post_type();
+	$model = bs_course_get_post_type();
 	$customField = $model->customFields;
 	$customField = $customField[$customType];
 	add_meta_box(
@@ -108,7 +108,7 @@ function bs_course_register($customType)
 
 function bs_course_callback($fieldType)
 {
-	$model = isset($course) ? $course : bs_get_post_type();
+	$model = bs_course_get_post_type();
 	$customField = $model->customFields;
 	$customField = $customField[$fieldType];
 	$dbEntry = $model->db . '_' . $customField['value'];
@@ -121,7 +121,7 @@ function bs_course_callback($fieldType)
 function bs_course_on_save($post_id)
 {
 
-	$model = isset($course) ? $course : bs_get_post_type();
+	$model = bs_course_get_post_type();
 
 	if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
 		return;
@@ -162,6 +162,7 @@ function bs_course_price_callback()
 {
 	bs_course_callback('price');
 }
+
 /** END GENERIC ADD */
 
 function bs_course_hours_register()
